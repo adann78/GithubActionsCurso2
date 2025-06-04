@@ -1,0 +1,26 @@
+on: push
+
+jobs:
+  first_jobs:
+    runs-on: ubuntu-latest
+    env:
+      MY_ENV_VAR: "CodigoFacil"
+
+    steps:
+      - name: Working dir
+        run: ls -al
+      - name: Action
+        uses: actions/checkout@v4
+      - name: Working dir after action
+        run: ls -al
+  second_job:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: first_jobs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hola mundo 2
+        run: echo "Hola mundo 2"
+
+       
+
+       
