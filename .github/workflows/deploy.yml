@@ -1,34 +1,18 @@
 on: push
 
 jobs:
-  first_jobs:
+  first_job:
     runs-on: ubuntu-latest
-    env:
-      MY_ENV_VAR: "CodigoFacil"
 
-    steps:
-      - name: Working dir
-        run: ls -al
-      - name: Action
-        uses: actions/checkout@v4
-      - name: Working dir after action
-        run: ls -al
-      - name: Set output variable
-        id: set_message
-        run: echo "my_variable=Hola Mundo" >> $GITHUB_OUTPUT
-
-      - name: Obtener mensaje
-        run: echo "${{ steps.set_message.outputs.my_variable }}"
-
-
-  second_job:
-    if: ${{ github.ref == 'refs/heads/main' }}
-    needs: first_jobs
-    runs-on: ubuntu-latest
-    steps:
-      - name: Hola mundo 2
-        run: echo "Hola mundo 2"
-
+    outputs:
+        salida: ${{ steps.step1.outputs.my_variable }}
     
-
-       
+    steps:
+      - name: Generar archivo
+        run: |
+          echo "Archivo prueba, hola" >> test.log
+      - name: Subir artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: archivo-test
+          path: test.log
