@@ -13,6 +13,14 @@ jobs:
         uses: actions/checkout@v4
       - name: Working dir after action
         run: ls -al
+      - name: Set output variable
+        id: set_message
+        run: echo "my_variable=Hola Mundo" >> $GITHUB_OUTPUT
+
+      - name: Obtener mensaje
+        run: echo "${{ steps.set_message.outputs.my_variable }}"
+
+
   second_job:
     if: ${{ github.ref == 'refs/heads/main' }}
     needs: first_jobs
@@ -21,6 +29,6 @@ jobs:
       - name: Hola mundo 2
         run: echo "Hola mundo 2"
 
-       
+    
 
        
